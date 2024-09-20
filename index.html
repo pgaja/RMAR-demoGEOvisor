@@ -31,7 +31,94 @@
     </style>
   </head>
   <body>
+    <h1><!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GEO VISOR WEB - RIBAMONTÁN AL MAR (DEMO*)</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/css/ol.css"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="http://raw.githack.com/walkermatt/ol-layerswitcher/master/dist/ol-layerswitcher.css"
+      type="text/css"
+    />
+    <script src="http://raw.githack.com/walkermatt/ol-layerswitcher/master/dist/ol-layerswitcher.js"></script>
+
+    <style>
+      .map {
+        width: 500px;
+        height: 500px;
+      }
+      .layer-switcher {
+        font-family: sans-serif;
+        font-size: small;
+      }
+    </style>
+  </head>
+  <body>
     <h1>openlayers Demo</h1>
+
+    <div id="map" class="map"></div>
+
+    <script>
+      var lyrGoogleSatelite = new ol.layer.Tile({
+        title: "Google Satelite",
+        type: "base",
+        visible: false,
+        source: new ol.source.XYZ({
+          url: "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}",
+        }),
+      })
+      var lyrGoogle = new ol.layer.Tile({
+        title: "Google",
+        type: "base",
+        visible: false,
+        source: new ol.source.XYZ({
+          url: "https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}",
+        }),
+      })
+      var lyrOSM = new ol.layer.Tile({
+        title: "OSM",
+        type: "base",
+        visible: true,
+        source: new ol.source.OSM(),
+      })
+      var map = new ol.Map({
+        target: "map",
+        layers: [
+          //lyrOSM
+          //lyrGoogleSatelite,
+          //lyrGoogle
+
+          new ol.layer.Group({
+            title: "Mapa base",
+            layers: [lyrOSM, lyrGoogleSatelite, lyrGoogle],
+          }),
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([-68.162635, -16.503637]),
+          zoom: 15,
+          maxZoom: 19,
+          minZoom: 11,
+        }),
+      })
+
+      var layerSwitcher = new ol.control.LayerSwitcher({
+        tipLabel: "Leyemda", // Optional label for button
+        groupSelectStyle: "children", // Can be 'children' [default], 'group' or 'none'
+      })
+      map.addControl(layerSwitcher)
+    </script>
+  </body>
+</html></h1>
 
     <div id="map" class="map"></div>
 
